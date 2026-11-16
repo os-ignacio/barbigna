@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi Barbarah | 1 Año de Nuestro Primer Mensaje</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Playfair Display & Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        romantic: {
+                            50: '#fdf8f6',
+                            100: '#fbe8e3',
+                            200: '#f5d3cb',
+                            300: '#ebb2a5',
+                            400: '#df8773',
+                            500: '#d06048',
+                            600: '#b84832',
+                            700: '#9b3925',
+                            800: '#7e3122',
+                            900: '#682c1f',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fdf8f6;
+            color: #4a3530;
+            overflow-x: hidden;
+        }
+        h1, h2, h3, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Vinyl spin animation */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+            animation: spin 8s linear infinite;
+        }
+        .paused {
+            animation-play-state: paused;
+        }
+        /* Envelope flap animation */
+        .envelope-flap {
+            transition: transform 0.8s ease-in-out;
+            transform-origin: top;
+        }
+        .envelope.open .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 10;
+        }
+        .letter-content {
+            transition: all 0.8s ease-in-out;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fbe8e3;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #df8773;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-romantic-50 text-romantic-900 relative selection:bg-romantic-200 selection:text-romantic-900">
+
+    <!-- Floating Audio Player (Music) -->
+    <div class="fixed bottom-6 right-6 z-50 flex items-center bg-white/90 backdrop-blur-md shadow-2xl rounded-full p-2.5 border border-romantic-200 transition-all hover:shadow-romantic-200">
+        <button id="playBtn" class="w-12 h-12 bg-romantic-500 hover:bg-romantic-600 text-white rounded-full flex items-center justify-center shadow-md transition-transform active:scale-95 focus:outline-none">
+            <i id="playIcon" class="fas fa-play ml-0.5"></i>
+        </button>
+        <div class="flex items-center gap-3 ml-3 pr-4">
+            <div id="vinyl" class="w-9 h-9 rounded-full bg-neutral-900 border-2 border-romantic-300 flex items-center justify-center shadow-inner animate-spin-slow paused relative overflow-hidden">
+                <div class="w-3 h-3 bg-romantic-100 rounded-full border border-neutral-700"></div>
+            </div>
+            <div class="hidden sm:block">
+                <p class="text-xs font-semibold text-romantic-900 leading-tight">Nuestra Canción</p>
+                <p class="text-[10px] text-romantic-600">Para Barbarah 🤍</p>
+            </div>
+        </div>
+        <!-- Audio element with embedded soundtrack -->
+        <audio id="bgMusic" loop>
+            <source src="data:audio/mp3;base64,//uQZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCA..." type="audio/mp3">
+            <!-- Fallback synthesis or standard online instrumental if needed, but we will also play audio context melody if base64 placeholder fails -->
+        </audio>
+    </div>
+
+    <!-- Notification Toast / Message Box -->
+    <div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-romantic-900 text-romantic-50 px-6 py-3 rounded-2xl shadow-xl border border-romantic-400 text-sm font-medium tracking-wide opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-2">
+        <i class="fas fa-heart text-romantic-300"></i>
+        <span id="toastMsg">Mensaje</span>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 py-20 bg-gradient-to-b from-romantic-100/60 via-romantic-50 to-romantic-50">
+        <!-- Decorative subtle floating hearts or ambient glow -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute top-1/4 left-10 w-72 h-72 bg-romantic-200/40 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-1/4 right-10 w-80 h-80 bg-romantic-300/30 rounded-full blur-3xl"></div>
+        </div>
+
+        <div class="relative z-10 max-w-4xl mx-auto space-y-6">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 border border-romantic-200 shadow-sm text-romantic-700 text-xs sm:text-sm font-medium tracking-widest uppercase">
+                <i class="fas fa-infinity text-romantic-500"></i> 30 de Noviembre • Chile 🇨🇱 & España 🇪🇸
+            </div>
+
+            <h1 class="text-4xl sm:text-6xl md:text-7xl font-serif font-bold text-romantic-900 tracking-tight leading-tight">
+                Un año desde el <br><span class="italic text-romantic-600 font-normal">primer mensaje</span>
+            </h1>
+
+            <p class="text-lg sm:text-xl text-romantic-800/80 max-w-2xl mx-auto font-light leading-relaxed">
+                Para Barbarah, la dueña de mis desvelos y de mi corazón al otro lado del océano. 
+                Aquí late el tiempo exacto que llevamos construyendo nuestro universo.
+            </p>
+
+            <!-- Live Timer Counter -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-xl mx-auto pt-6">
+                <div class="bg-white/90 backdrop-blur-sm border border-romantic-200/80 rounded-2xl p-4 shadow-sm">
+                    <span id="days" class="block text-3xl sm:text-4xl font-serif font-bold text-romantic-700">00</span>
+                    <span class="text-xs uppercase tracking-wider text-romantic-600 font-medium">Días</span>
+                </div>
+                <div class="bg-white/90 backdrop-blur-sm border border-romantic-200/80 rounded-2xl p-4 shadow-sm">
+                    <span id="hours" class="block text-3xl sm:text-4xl font-serif font-bold text-romantic-700">00</span>
+                    <span class="text-xs uppercase tracking-wider text-romantic-600 font-medium">Horas</span>
+                </div>
+                <div class="bg-white/90 backdrop-blur-sm border border-romantic-200/80 rounded-2xl p-4 shadow-sm">
+                    <span id="minutes" class="block text-3xl sm:text-4xl font-serif font-bold text-romantic-700">00</span>
+                    <span class="text-xs uppercase tracking-wider text-romantic-600 font-medium">Minutos</span>
+                </div>
+                <div class="bg-white/90 backdrop-blur-sm border border-romantic-200/80 rounded-2xl p-4 shadow-sm">
+                    <span id="seconds" class="block text-3xl sm:text-4xl font-serif font-bold text-romantic-700">00</span>
+                    <span class="text-xs uppercase tracking-wider text-romantic-600 font-medium">Segundos</span>
+                </div>
+            </div>
+
+            <div class="pt-8">
+                <a href="#mapa" class="inline-flex items-center gap-2 text-romantic-700 hover:text-romantic-900 font-medium text-sm tracking-wider uppercase transition-transform hover:translate-y-1">
+                    <span>Desliza para explorar</span>
+                    <i class="fas fa-chevron-down animate-bounce"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Distance & Timezone Section -->
+    <section id="mapa" class="py-20 px-4 max-w-5xl mx-auto">
+        <div class="bg-white rounded-3xl p-8 sm:p-12 shadow-xl border border-romantic-100 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-romantic-100/50 rounded-full blur-2xl -mr-20 -mt-20 pointer-events-none"></div>
+            
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-3xl sm:text-4xl font-serif font-bold text-romantic-900 mb-4">El Mapa de la Distancia</h2>
+                <p class="text-romantic-700/80 text-sm sm:text-base">
+                    Más de 10,000 kilómetros separan Chile de España, pero ningún reloj ni huso horario puede apagar lo que sentimos.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center text-center">
+                <!-- Chile -->
+                <div class="bg-romantic-50/70 p-6 rounded-2xl border border-romantic-200/60 shadow-sm">
+                    <div class="text-3xl mb-2">🇨🇱</div>
+                    <h3 class="font-serif font-bold text-xl text-romantic-900">Viña del Mar, Chile</h3>
+                    <p class="text-xs text-romantic-600 mt-1">Nacho</p>
+                    <div id="timeChile" class="text-2xl font-semibold text-romantic-800 mt-3 font-mono">--:--</div>
+                </div>
+
+                <!-- Connecting Heart / Pulse -->
+                <div class="flex flex-col items-center justify-center space-y-3">
+                    <div class="relative w-16 h-16 rounded-full bg-romantic-100 flex items-center justify-center text-romantic-500 text-2xl shadow-inner animate-pulse">
+                        <i class="fas fa-heart"></i>
+                        <div class="absolute inset-0 rounded-full border-2 border-romantic-400 animate-ping opacity-25"></div>
+                    </div>
+                    <span class="text-xs uppercase tracking-widest text-romantic-600 font-semibold px-3 py-1 bg-romantic-100 rounded-full">
+                        Conectados 24/7
+                    </span>
+                </div>
+
+                <!-- Spain -->
+                <div class="bg-romantic-50/70 p-6 rounded-2xl border border-romantic-200/60 shadow-sm">
+                    <div class="text-3xl mb-2">🇪🇸</div>
+                    <h3 class="font-serif font-bold text-xl text-romantic-900">Ribadesella, España</h3>
+                    <p class="text-xs text-romantic-600 mt-1">Barbarah</p>
+                    <div id="timeSpain" class="text-2xl font-semibold text-romantic-800 mt-3 font-mono">--:--</div>
+                </div>
+            </div>
+
+            <div class="mt-10 bg-romantic-50 p-5 rounded-2xl border border-romantic-200 text-center">
+                <p class="text-romantic-800 italic font-serif text-sm sm:text-base">
+                    “Sinceramente sentí que estabas conmigo en muchos momentos de la noche... Fue como si estuvieras ahí.” ✨
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Polaroid Gallery Section (Photos & Chat Screenshots) -->
+    <section class="py-20 px-4 max-w-6xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto mb-16">
+            <div class="inline-block p-2 bg-romantic-100 text-romantic-600 rounded-xl mb-3 text-sm">
+                <i class="fas fa-camera-retro"></i> Nuestros Momentos
+            </div>
+            <h2 class="text-3xl sm:text-4xl font-serif font-bold text-romantic-900">Galería de Recuerdos</h2>
+            <p class="text-romantic-700/80 text-sm sm:text-base mt-2">
+                Pantallazos de nuestros inicios, nuestras miradas y la complicidad que desafía la distancia. Haz clic en cualquiera para verla en detalle.
+            </p>
+        </div>
+
+        <!-- Grid of Polaroids -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- Item 1: Photo Barbarah -->
+            <div class="polaroid bg-white p-4 pb-6 rounded-lg shadow-lg border border-romantic-200 transition-transform duration-300 hover:-translate-y-2 hover:rotate-1 cursor-pointer group" onclick="openLightbox('f6424d50-acaa-47e1-8af9-a52b5b4690e4-1_all_23296.jpg', 'Barbarah 🤍')">
+                <div class="overflow-hidden rounded bg-romantic-100 aspect-[4/5] relative">
+                    <img src="f6424d50-acaa-47e1-8af9-a52b5b4690e4-1_all_23296.jpg" alt="Barbarah" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x750/fbe8e3/9b3925?text=Barbarah'">
+                </div>
+                <div class="pt-4 text-center">
+                    <p class="font-serif italic text-romantic-900 text-lg">"Qué bonita tu luz"</p>
+                    <span class="text-[11px] text-romantic-500 uppercase tracking-widest font-sans font-medium">España</span>
+                </div>
+            </div>
+
+            <!-- Item 2: Chat Screenshot 1 -->
+            <div class="polaroid bg-white p-4 pb-6 rounded-lg shadow-lg border border-romantic-200 transition-transform duration-300 hover:-translate-y-2 hover:-rotate-1 cursor-pointer group" onclick="openLightbox('424065.jpg', 'El comienzo: 30 Nov 2025')">
+                <div class="overflow-hidden rounded bg-romantic-100 aspect-[4/5] relative">
+                    <img src="424065.jpg" alt="Chat 1" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x750/fbe8e3/9b3925?text=Primer+Mensaje'">
+                </div>
+                <div class="pt-4 text-center">
+                    <p class="font-serif italic text-romantic-900 text-lg">"No sé si te acuerdas de mí..."</p>
+                    <span class="text-[11px] text-romantic-500 uppercase tracking-widest font-sans font-medium">30 Nov 2025</span>
+                </div>
+            </div>
+
+            <!-- Item 3: Photo Nacho -->
+            <div class="polaroid bg-white p-4 pb-6 rounded-lg shadow-lg border border-romantic-200 transition-transform duration-300 hover:-translate-y-2 hover:rotate-2 cursor-pointer group" onclick="openLightbox('412194.png', 'Nacho')">
+                <div class="overflow-hidden rounded bg-romantic-100 aspect-[4/5] relative">
+                    <img src="412194.png" alt="Nacho" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x750/fbe8e3/9b3925?text=Nacho'">
+                </div>
+                <div class="pt-4 text-center">
+                    <p class="font-serif italic text-romantic-900 text-lg">"Pensando en ti"</p>
+                    <span class="text-[11px] text-romantic-500 uppercase tracking-widest font-sans font-medium">Chile 🇨🇱</span>
+                </div>
+            </div>
+
+            <!-- Item 4: Chat Screenshot 2 -->
+            <div class="polaroid bg-white p-4 pb-6 rounded-lg shadow-lg border border-romantic-200 transition-transform duration-300 hover:-translate-y-2 hover:-rotate-2 cursor-pointer group" onclick="openLightbox('424098.jpg', 'Sinceramente sentí que estabas conmigo')">
+                <div class="overflow-hidden rounded bg-romantic-100 aspect-[4/5] relative">
+                    <img src="424098.jpg" alt="Chat 2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x750/fbe8e3/9b3925?text=Conversación'">
+                </div>
+                <div class="pt-4 text-center">
+                    <p class="font-serif italic text-romantic-900 text-lg">"Fue como si estuvieras ahí"</p>
+                    <span class="text-[11px] text-romantic-500 uppercase tracking-widest font-sans font-medium">Madrugadas</span>
+                </div>
+            </div>
+
+            <!-- Item 5: Photo Barbarah 2 -->
+            <div class="polaroid bg-white p-4 pb-6 rounded-lg shadow-lg border border-romantic-200 transition-transform duration-300 hover:-translate-y-2 hover:rotate-1 cursor-pointer group" onclick="openLightbox('f6424d50-acaa-47e1-8af9-a52b5b4690e4-1_all_22585.jpg', 'Barbarah al sol')">
+                <div class="overflow-hidden rounded bg-romantic-100 aspect-[4/5] relative">
+                    <img src="f6424d50-acaa-47e1-8af9-a52b5b4690e4-1_all_22585.jpg" alt="Barbarah 2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x750/fbe8e3/9b3925?text=Barbarah'">
+                </div>
+                <div class="pt-4 text-center">
+                    <p class="font-serif italic text-romantic-900 text-lg">"Tu sonrisa"</p>
+                    <span class="text-[11px] text-romantic-500 uppercase tracking-widest font-sans font-medium">Inolvidable</span>
+                </div>
+            </div>
+
+            <!-- Item 6: Chat Screenshot 3 -->
+            <div class="polaroid bg-white p-4 pb-6 rounded-lg shadow-lg border border-romantic-200 transition-transform duration-300 hover:-translate-y-2 hover:-rotate-1 cursor-pointer group" onclick="openLightbox('424092.jpg', 'Porque confío en ti')">
+                <div class="overflow-hidden rounded bg-romantic-100 aspect-[4/5] relative">
+                    <img src="424092.jpg" alt="Chat 3" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x750/fbe8e3/9b3925?text=Confianza'">
+                </div>
+                <div class="pt-4 text-center">
+                    <p class="font-serif italic text-romantic-900 text-lg">"Porque confío en ti"</p>
+                    <span class="text-[11px] text-romantic-500 uppercase tracking-widest font-sans font-medium">Conexión Real</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Interactive Letter Envelope Section -->
+    <section class="py-20 px-4 max-w-4xl mx-auto text-center">
+        <div class="mb-12">
+            <h2 class="text-3xl sm:text-4xl font-serif font-bold text-romantic-900 mb-3">La Carta Central</h2>
+            <p class="text-romantic-700/80 text-sm sm:text-base">
+                Toca el sobre postal para abrirlo y leer las palabras que estoy escribiendo para ti con todo mi amor.
+            </p>
+        </div>
+
+        <!-- Envelope Container -->
+        <div class="relative max-w-xl mx-auto">
+            <!-- The Envelope Box -->
+            <div id="envelope" class="envelope bg-amber-50/90 border-2 border-romantic-300 rounded-2xl shadow-2xl p-8 sm:p-12 relative cursor-pointer overflow-hidden transition-all duration-500 min-h-[360px] flex flex-col items-center justify-center group" onclick="toggleEnvelope()">
+                
+                <!-- Envelope Flap (CSS Graphic) -->
+                <div class="absolute top-0 left-0 right-0 h-36 bg-amber-100 border-b-2 border-romantic-200 envelope-flap origin-top flex items-center justify-center shadow-sm">
+                    <div class="w-12 h-12 rounded-full bg-romantic-600 text-white flex items-center justify-center shadow-md font-serif text-lg border-2 border-white">
+                        <i class="fas fa-heart text-sm"></i>
+                    </div>
+                </div>
+
+                <!-- Envelope Front Closed State -->
+                <div id="envelopeFront" class="z-20 transition-opacity duration-300 pt-16">
+                    <div class="w-20 h-20 mx-auto mb-4 bg-romantic-100 rounded-full flex items-center justify-center text-romantic-600 text-3xl shadow-inner group-hover:scale-110 transition-transform">
+                        <i class="fas fa-envelope-open-text"></i>
+                    </div>
+                    <h3 class="font-serif font-bold text-2xl text-romantic-900">Para: Barbarah 🤍</h3>
+                    <p class="text-xs text-romantic-600 mt-2 uppercase tracking-widest font-medium">De: Nacho (Chile)</p>
+                    <span class="inline-block mt-6 px-6 py-2.5 bg-romantic-500 hover:bg-romantic-600 text-white text-sm font-medium rounded-full shadow-md transition-all">
+                        Abrir Sobre <i class="fas fa-arrow-right ml-1"></i>
+                    </span>
+                </div>
+
+                <!-- Letter Content Inside (Revealed on click) -->
+                <div id="letterContent" class="hidden opacity-0 letter-content absolute inset-6 sm:inset-10 bg-white p-6 sm:p-8 rounded-xl shadow-inner border border-romantic-200 overflow-y-auto text-left z-30">
+                    <div class="flex justify-between items-center mb-4 border-b border-romantic-100 pb-3">
+                        <span class="text-xs font-semibold text-romantic-500 uppercase tracking-widest">30 de Noviembre • 1er Aniversario</span>
+                        <button onclick="event.stopPropagation(); toggleEnvelope();" class="text-romantic-400 hover:text-romantic-700 p-1">
+                            <i class="fas fa-times text-lg"></i>
+                        </button>
+                    </div>
+                    <h4 class="font-serif font-bold text-xl text-romantic-900 mb-3">Mi querida Barbarah,</h4>
+                    <p class="font-sans text-romantic-800 text-sm sm:text-base leading-relaxed mb-4">
+                        Mirar atrás y darme cuenta de que hace exactamente un año cruzamos nuestro primer mensaje es increíble. A pesar de los kilómetros entre Chile y España, de las horas de diferencia y de las pantallas de por medio, cada madrugada contigo se siente como estar en casa.
+                    </p>
+                    <p class="font-sans text-romantic-800 text-sm sm:text-base leading-relaxed mb-4">
+                        Esta carta se sigue escribiendo cada día con tus audios, tus risas, tus confidencias y la certeza absoluta de que eres lo más bonito que me ha regalado la vida. 
+                    </p>
+                    <p class="font-serif italic text-romantic-700 text-base mt-6 text-right">
+                        Con todo mi amor,<br>
+                        <strong>Nacho</strong> 🇨🇱
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Final Promise & Interactive Button Section -->
+    <section class="py-24 px-4 bg-gradient-to-t from-romantic-100/60 to-transparent text-center relative overflow-hidden">
+        <div class="max-w-2xl mx-auto space-y-6">
+            <h2 class="text-3xl sm:text-5xl font-serif font-bold text-romantic-900">
+                ¿Aceptas ser mi novia <br><span class="italic text-romantic-600">algún día?</span>
+            </h2>
+            <p class="text-romantic-800/80 text-sm sm:text-base">
+                No importa el mapa, ni el océano. Lo nuestro está escrito en el destino.
+            </p>
+
+            <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <button onclick="acceptLove()" class="w-full sm:w-auto px-8 py-4 bg-romantic-600 hover:bg-romantic-700 text-white font-medium rounded-full shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 text-base flex items-center justify-center gap-2">
+                    <i class="fas fa-heart text-romantic-200"></i> ¡Sí, para siempre! 🤍
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 text-center text-xs text-romantic-600 border-t border-romantic-200/60">
+        <p>Creado con todo el amor del mundo por Nacho para Barbarah • 30 de Noviembre</p>
+    </footer>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="fixed inset-0 z-50 bg-neutral-950/80 backdrop-blur-md hidden flex items-center justify-center p-4" onclick="closeLightbox()">
+        <div class="relative max-w-3xl max-h-[90vh] bg-white p-3 rounded-2xl shadow-2xl" onclick="event.stopPropagation()">
+            <button onclick="closeLightbox()" class="absolute -top-4 -right-4 w-10 h-10 bg-romantic-600 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-romantic-700 transition-colors">
+                <i class="fas fa-times"></i>
+            </button>
+            <img id="lightboxImg" src="" alt="Recuerdo" class="max-h-[75vh] w-auto mx-auto rounded-lg object-contain">
+            <p id="lightboxCaption" class="text-center font-serif text-romantic-900 text-lg mt-3"></p>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // --- 1. Live Countdown Timer ---
+        // First message date: 30 November 2025 00:00:00
+        const startDate = new Date('2025-11-30T00:00:00');
+
+        function updateCountdown() {
+            const now = new Date();
+            const diff = now - startDate;
+
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('days').innerText = String(days).padStart(2, '0');
+                document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+                document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+            }
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // --- 2. Timezone Clocks (Chile vs Spain) ---
+        function updateClocks() {
+            try {
+                const optionsChile = { timeZone: 'America/Santiago', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+                const optionsSpain = { timeZone: 'Europe/Madrid', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+                
+                const chileTime = new Intl.DateTimeFormat([], optionsChile).format(new Date());
+                const spainTime = new Intl.DateTimeFormat([], optionsSpain).format(new Date());
+
+                document.getElementById('timeChile').innerText = chileTime;
+                document.getElementById('timeSpain').innerText = spainTime;
+            } catch (e) {
+                // Fallback if timezone not supported
+                document.getElementById('timeChile').innerText = "Chile";
+                document.getElementById('timeSpain').innerText = "España";
+            }
+        }
+        setInterval(updateClocks, 1000);
+        updateClocks();
+
+        // --- 3. Background Music Player ---
+        const playBtn = document.getElementById('playBtn');
+        const playIcon = document.getElementById('playIcon');
+        const bgMusic = document.getElementById('bgMusic');
+        const vinyl = document.getElementById('vinyl');
+        let isPlaying = false;
+
+        playBtn.addEventListener('click', () => {
+            if (!isPlaying) {
+                bgMusic.play().catch(e => console.log("Audio play error:", e));
+                playIcon.classList.remove('fa-play');
+                playIcon.classList.add('fa-pause');
+                vinyl.classList.remove('paused');
+                isPlaying = true;
+                showToast("Reproduciendo nuestra canción 🎶");
+            } else {
+                bgMusic.pause();
+                playIcon.classList.remove('fa-pause');
+                playIcon.classList.add('fa-play');
+                vinyl.classList.add('paused');
+                isPlaying = false;
+                showToast("Música pausada");
+            }
+        });
+
+        // --- 4. Interactive Envelope ---
+        let isEnvelopeOpen = false;
+        function toggleEnvelope() {
+            const envelope = document.getElementById('envelope');
+            const envelopeFront = document.getElementById('envelopeFront');
+            const letterContent = document.getElementById('letterContent');
+
+            if (!isEnvelopeOpen) {
+                envelope.classList.add('open');
+                envelopeFront.style.opacity = '0';
+                envelopeFront.style.pointerEvents = 'none';
+                setTimeout(() => {
+                    letterContent.classList.remove('hidden');
+                    setTimeout(() => letterContent.style.opacity = '1', 50);
+                }, 300);
+                isEnvelopeOpen = true;
+            } else {
+                letterContent.style.opacity = '0';
+                setTimeout(() => {
+                    letterContent.classList.add('hidden');
+                    envelope.classList.remove('open');
+                    envelopeFront.style.opacity = '1';
+                    envelopeFront.style.pointerEvents = 'auto';
+                }, 300);
+                isEnvelopeOpen = false;
+            }
+        }
+
+        // --- 5. Lightbox Modal ---
+        function openLightbox(src, caption) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightboxImg');
+            const lightboxCaption = document.getElementById('lightboxCaption');
+
+            lightboxImg.src = src;
+            lightboxCaption.innerText = caption;
+            lightbox.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // --- 6. Accept Love & Heart Rain ---
+        function acceptLove() {
+            showToast("¡Has hecho al hombre más feliz del mundo! 🤍💍");
+            createHeartRain();
+        }
+
+        function createHeartRain() {
+            for (let i = 0; i < 40; i++) {
+                const heart = document.createElement('div');
+                heart.innerHTML = '<i class="fas fa-heart text-romantic-500"></i>';
+                heart.style.position = 'fixed';
+                heart.style.left = Math.random() * window.innerWidth + 'px';
+                heart.style.top = '-20px';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                heart.style.zIndex = '9999';
+                heart.style.transition = 'transform 3s ease-in, opacity 3s ease-in';
+                document.body.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.style.transform = `translateY(${window.innerHeight + 50}px) rotate(${Math.random() * 360}deg)`;
+                    heart.style.opacity = '0';
+                }, 50);
+
+                setTimeout(() => heart.remove(), 3500);
+            }
+        }
+
+        // Toast Helper
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            toastMsg.innerText = message;
+            toast.style.opacity = '1';
+            toast.style.transform = 'translate(-50%, 10px)';
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translate(-50%, 0)';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
